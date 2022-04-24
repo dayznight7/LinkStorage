@@ -4,9 +4,51 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>LinkStorage</title>
+  <link rel="stylesheet" href="css/myPatternLock.css">
+  <style>
+*{
+  background-color: black;
+}
+.container {
+  margin: auto;
+  position: relative;
+}
+#mpl {
+  margin: auto;
+  margin-top: 400px;
+  display: grid;
+  background-color: blueviolet;
+}
+.outcircle {
+  border: 7px solid white;
+  border-radius: 50%;
+  display: flex;
+}
+.incircle {
+  margin: auto;
+  background-color: white;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+#jsCanvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  margin: auto;
+  opacity: 0.2;
+
+}
+  </style>
 </head>
 <body>
+
+  <div class="container">
+    <div id="mpl"></div>
+    <canvas id="jsCanvas" class="canvas"></canvas>  
+  </div>
+  
 
   <!--firebase7/8/9 CDN (now 8)-->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -19,6 +61,38 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <!--sweetalert cdn https://sweetalert.js.org/guides/-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <script> // src="js/myPatternLock.js"
+
+    var mpl_row = 3;
+    var mpl_col = 4;
+    draw_mpl(mpl_row, mpl_col);
+
+    function draw_mpl(row, col) {
+      var gap = 60;
+      var rad = 100;
+      var pad = 100;
+      var w = rad*col+gap*(col-1);
+      var h = rad*row+gap*(row-1);
+      $("#mpl").empty();
+      $("#mpl").css({
+        "width": `${w}`,
+        "height": `${h}`,
+        "padding": `${pad}px`,
+        "grid-template-columns": `repeat(${col}, 1fr)`,
+        "grid-template-rolumns": `repeat(${row}, 1fr)`,
+        "gap": `${gap}px`
+      });
+      for (var i=0; i<row*col; i++) {
+        $("#mpl").append(`<div id='outcircle${i}' class='outcircle' onmousedown='start(${i})'><div id='incircle${i}' class='incircle'></div></div>`)
+      }
+      $("#jsCanvas").css({
+        "width": `100%`,
+        "height": `100%`
+      });
+    }
+
+  </script>
 
 </body>
 </html>
