@@ -11,7 +11,7 @@
   background-color: black;
 }
 .container {
-  margin: auto;
+  margin: 0 auto;
   position: relative;
 }
 #mpl {
@@ -32,13 +32,13 @@
   height: 15px;
   border-radius: 50%;
 }
-#jsCanvas {
-  display: block;
+#myCanvas {
   position: absolute;
-  top: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   margin: auto;
   opacity: 0.2;
-
 }
   </style>
 </head>
@@ -46,7 +46,7 @@
 
   <div class="container">
     <div id="mpl"></div>
-    <canvas id="jsCanvas" class="canvas"></canvas>  
+    <canvas id="myCanvas" class="canvas"></canvas>  
   </div>
   
 
@@ -84,13 +84,48 @@
         "gap": `${gap}px`
       });
       for (var i=0; i<row*col; i++) {
-        $("#mpl").append(`<div id='outcircle${i}' class='outcircle' onmousedown='start(${i})'><div id='incircle${i}' class='incircle'></div></div>`)
+        $("#mpl").append(`<div id='outcircle${i}' class='outcircle'><div id='incircle${i}' class='incircle'></div></div>`)
       }
-      $("#jsCanvas").css({
-        "width": `100%`,
-        "height": `100%`
-      });
+      $("#myCanvas").attr("width", w+2*pad).attr("height", h+2*pad);
     }
+
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    var painting = false;
+
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 10;
+    ctx.lineCap = "round";
+
+    function onMouseUp(event) {
+      stopPainting();
+    }
+    function onMouseDown(event) {
+      const x = event.offsetX;
+      const y = event.offsetY;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
+    function onMouseMove(event) {
+      const x = event.offsetX;
+      const y = event.offsetY;
+
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+    function stopPainting(event) {
+      painting = false;
+    }
+
+    if (canvas) {
+      // velog.io/@mokyoungg/JS-JS에서-Canvas-사용하기마우스로-그리기
+      canvas.addEventListener("mousemove", onMouseMove);
+      canvas.addEventListener("mousedown", onMouseDown);
+      canvas.addEventListener("mouseup", onMouseUp);
+      canvas.addEventListener("mouseleave", stopPainting);
+    }
+    
+
 
   </script>
 
