@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="css/myPatternLock.css">
   <style>
 *{
-  background-color: black;
 }
 .container {
   margin: 0 auto;
@@ -18,7 +17,7 @@
   margin: auto;
   margin-top: 400px;
   display: grid;
-  background-color: blueviolet;
+  background-color: black;
 }
 .outcircle {
   border: 7px solid white;
@@ -38,7 +37,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   margin: auto;
-  opacity: 0.2;
 }
   </style>
 </head>
@@ -66,12 +64,9 @@
 
     var mpl_row = 3;
     var mpl_col = 4;
-    draw_mpl(mpl_row, mpl_col);
+    draw_mpl(mpl_row, mpl_col, 60, 100, 100);
 
-    function draw_mpl(row, col) {
-      var gap = 60;
-      var rad = 100;
-      var pad = 100;
+    function draw_mpl(row, col, gap, rad, pad) {
       var w = rad*col+gap*(col-1);
       var h = rad*row+gap*(row-1);
       $("#mpl").empty();
@@ -93,28 +88,45 @@
     const ctx = canvas.getContext("2d");
     var painting = false;
 
-    ctx.strokeStyle = "red";
+    ctx.strokeStyle = "white";
     ctx.lineWidth = 10;
     ctx.lineCap = "round";
+    var dragging = false;
+    var startpointX;
+    var startpointY;
 
     function onMouseUp(event) {
       stopPainting();
     }
     function onMouseDown(event) {
-      const x = event.offsetX;
-      const y = event.offsetY;
-      ctx.beginPath();
-      ctx.moveTo(x, y);
+      dragging = true;
+      startpointX = event.offsetX;
+      startpointY = event.offsetY;
     }
     function onMouseMove(event) {
       const x = event.offsetX;
       const y = event.offsetY;
-
-      ctx.lineTo(x, y);
-      ctx.stroke();
+      
+      if (dragging) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.moveTo(startpointX, startpointY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+      
     }
     function stopPainting(event) {
-      painting = false;
+      dragging = false;
+    }
+    function getDots(row, col, gap, rad, pad) {
+      arr = [];
+      for (var i=0; i < col; i++) {
+        for (var j=0; j < row; j++) {
+          var tmp = [];
+          arr.append(tmp); 
+        }
+      }
     }
 
     if (canvas) {
