@@ -1,131 +1,119 @@
-draw_mpl(3, 4, 60, 100, 100);
-function draw_mpl(row, col, gap, rad, pad) {
-  var w = rad*col+gap*(col-1);
-  var h = rad*row+gap*(row-1);
+
+var mpl_row;
+var mpl_col;
+var mpl_gap;
+var mpl_rad;
+var mpl_pad;
+var mpl_dragging = false;
+var mpl_dots = [];
+var mpl_path = [];
+var mpl_startX;
+var mpl_startY;
+const mpl_canvas = document.getElementById("mplCanvas");
+const mpl_ctx = mpl_canvas.getContext("2d");
+
+
+function mpl_init(row, col, gap, rad, pad) {
+  mpl_row = row;
+  mpl_col = col;
+  mpl_gap = gap;
+  mpl_rad = rad;
+  mpl_pad = pad;
+
+  var tmp_w = 2*rad*col + gap*(col-1);
+  var tmp_h = 2*rad*row + gap*(row-1);
   $("#mpl").empty();
   $("#mpl").css({
-    "width": `${w}`,
-    "height": `${h}`,
-    "padding": `${pad}px`,
-    "grid-template-columns": `repeat(${col}, 1fr)`,
-    "grid-template-rolumns": `repeat(${row}, 1fr)`,
+    "width": `${tmp_w}`,
+    "height": `${tmp_h}`,
+    "padding": `${mpl_pad}px`,
+    "grid-template-columns": `repeat(${mpl_col}, 1fr)`,
+    "grid-template-rolumns": `repeat(${mpl_row}, 1fr)`,
     "gap": `${gap}px`
   });
-  for (var i=0; i<row*col; i++) {
-    $("#mpl").append(`<div id='outcircle${i}' class='outcircle'><div id='incircle${i}' class='incircle'></div></div>`)
+  for (var i=0; i<mpl_row*mpl_col; i++) {
+    $("#mpl").append(`<div id='outcircle${i}' class='outcircle'><div id='incircle${i}' class='incircle'></div></div>`);
   }
-  $("#myCanvas").attr("width", w+2*pad).attr("height", h+2*pad);
+  $("#mplCanvas").attr("width", tmp_w+2*pad).attr("height", tmp_h+2*pad);
 }
 
-const canvas = document.getElementById("myCanvas");
-const ctx = canvas.getContext("2d");
-var painting = false;
 
-ctx.strokeStyle = "white";
-ctx.lineWidth = 10;
-ctx.lineCap = "round";
-var dragging = false;
-
-var arrDots = getDots(3, 4, 60, 100, 100);
-var usedDots = [];
-var startpointX;
-var startpointY;
-var pw;
-
-function getDots(row, col, gap, rad, pad) {
-  arr = [];
-  for (var i=0; i < row; i++) {
-    for (var j=0; j < col; j++) {
-      var tmp = [];
-      tmp[0] = pad + rad / 2 + (rad+gap) * j;
-      tmp[1] = pad + rad / 2 + (rad+gap) * i;
-      arr[i*col+j] = tmp; 
+function mpl_getDots() {
+  var tmp_arr = [];
+  for (var i=0; i < mpl_row; i++) {
+    for (var j=0; j < mpl_col; j++) {
+      var tmp_xy = [];
+      tmp_xy[0] = mpl_pad + mpl_rad + (2*mpl_rad + mpl_gap) * j;
+      tmp_xy[1] = mpl_pad + mpl_rad + (2*mpl_rad + mpl_gap) * i;
+      tmp_arr[i*mpl_col+j] = tmp_xy;
     }
   }
-  return arr;
+  return tmp_arr;
 }
 
-function isConnected(x, y, rad) {
-  for (var i = 0; i < arrDots.length; i++) {
-    if ((x-arrDots[i][0])**2 + (y-arrDots[i][1])**2 < rad**2 && usedDots.indexOf(arrDots[i]) == -1) {
-      usedDots[usedDots.length] = arrDots[i];
+
+function mpl_isConnected(x, y) {
+  for (var i=0; i < mpl_dots.length; i++) {
+    if ((x-mpl_dots[i][0])**2 + (y-mpl_dots[i][1])**2 < (mpl_rad)**2 && mpl_path.indexOf(mpl_dots[i]) == -1) {
+      mpl_path[mpl_path.length] = mpl_dots[i];
       return true;
     }
   }
   return false;
 }
 
-function drawDrawn() {
-  if (usedDots.length > 1) {
-    for (var i = 0; i < usedDots.length - 1; i++) {
-      ctx.beginPath();
-      ctx.moveTo(usedDots[i][0], usedDots[i][1]);
-      ctx.lineTo(usedDots[i+1][0], usedDots[i+1][1]);
-      ctx.stroke();
+
+function mpl_drawPath() {
+  if (mpl_path.length > 1) {
+    for (var i=0; i < mpl_path.length-1; i++) {
+      mpl_ctx.beginPath();
+      mpl_ctx.moveTo(mpl_path[i][0], mpl_path[i][1]);
+      mpl_ctx.lineTo(mpl_path[i+1][0], mpl_path[i+1][1]);
+      mpl_ctx.stroke();
     }
   }
 }
 
-function pathToStr() {
-  var ans = "";
-  for (var i = 0; i < usedDots.length; i++) {
-    ans += String(arrDots.indexOf(usedDots[i]));
-  }
-  return ans;
-}
-
-function onMouseUp(event) {
-  if (dragging) {
-    pw = pathToStr();
-    console.log(pw);
-  }
-  stopPainting();
-}
-function onMouseDown(event) {
-  arrDots = getDots(3, 4, 60, 100, 100);
-  usedDots = [];
+function mpl_mousedown(event) {
   const x = event.offsetX;
   const y = event.offsetY;
-  if (isConnected(x, y, 50)) {
-    drawDrawn();
-    startpointX = usedDots[usedDots.length-1][0];
-    startpointY = usedDots[usedDots.length-1][1];
-    dragging = true;
+  mpl_dots = mpl_getDots();
+  mpl_path = [];
+  if (mpl_isConnected(x, y)) {
+    mpl_drawPath();
+    mpl_startX = mpl_path[mpl_path.length-1][0];
+    mpl_startY = mpl_path[mpl_path.length-1][1];
+    mpl_dragging = true;
   }
 }
-function onMouseMove(event) {
+
+
+function mpl_mousemove(event) {
   const x = event.offsetX;
   const y = event.offsetY;
       
-  if (dragging) {
-    if (isConnected(x, y, 50)) {
-      startpointX = usedDots[usedDots.length-1][0];
-      startpointY = usedDots[usedDots.length-1][1];
+  if (mpl_dragging) {
+    if (mpl_isConnected(x, y)) {
+      mpl_startX = mpl_path[mpl_path.length-1][0];
+      mpl_startY = mpl_path[mpl_path.length-1][1];
     }
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawDrawn();
-    ctx.beginPath();
-    ctx.moveTo(startpointX, startpointY);
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    mpl_ctx.clearRect(0, 0, mpl_canvas.width, mpl_canvas.height);
+    mpl_drawPath();
+    mpl_ctx.beginPath();
+    mpl_ctx.moveTo(mpl_startX, mpl_startY);
+    mpl_ctx.lineTo(x, y);
+    mpl_ctx.stroke();
   }
-}
-function stopPainting(event) {
-  if (dragging) {
-    startpointX = usedDots[usedDots.length-1][0];
-    startpointY = usedDots[usedDots.length-1][1];
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawDrawn();
-  }
-  dragging = false;
 }
 
 
-if (canvas) {
-  // velog.io/@mokyoungg/JS-JS에서-Canvas-사용하기마우스로-그리기
-  canvas.addEventListener("mousemove", onMouseMove);
-  canvas.addEventListener("mousedown", onMouseDown);
-  canvas.addEventListener("mouseup", onMouseUp);
-  canvas.addEventListener("mouseleave", stopPainting);
+function mpl_stopPainting(event) {
+  if (mpl_dragging) {
+    mpl_startX = mpl_path[mpl_path.length-1][0];
+    mpl_startY = mpl_path[mpl_path.length-1][1];
+    mpl_ctx.clearRect(0, 0, mpl_canvas.width, mpl_canvas.height);
+    mpl_drawPath();
+  }
+  mpl_dragging = false;
 }
 
