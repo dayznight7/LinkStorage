@@ -1,7 +1,7 @@
 function pathToStr() {
   var tmp_str = "";
   for (var i=0; i < mpl_path.length; i++) {
-    tmp_str += String(mpl_dots.indexOf(mpl_dots[i]));
+    tmp_str += String(mpl_dots.indexOf(mpl_path[i]));
   }
   return tmp_str;
 }
