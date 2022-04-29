@@ -4,20 +4,20 @@
 }
 #mpl {
   margin: auto;
-  margin-top: 400px;
+  margin-top: 240px;
   display: grid;
   background-color: black;
 }
 .outcircle {
-  border: 7px solid white;
+  border: 3px solid white;
   border-radius: 50%;
   display: flex;
 }
 .incircle {
   margin: auto;
+  width: 5px;
+  height: 5px;
   background-color: white;
-  width: 15px;
-  height: 15px;
   border-radius: 50%;
 }
 #mplCanvas {

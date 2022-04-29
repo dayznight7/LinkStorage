@@ -24,8 +24,8 @@ function mpl_init(row, col, gap, rad, pad) {
   var tmp_h = 2*rad*row + gap*(row-1);
   $("#mpl").empty();
   $("#mpl").css({
-    "width": `${tmp_w}`,
-    "height": `${tmp_h}`,
+    "width": `${tmp_w}px`,
+    "height": `${tmp_h}px`,
     "padding": `${mpl_pad}px`,
     "grid-template-columns": `repeat(${mpl_col}, 1fr)`,
     "grid-template-rolumns": `repeat(${mpl_row}, 1fr)`,

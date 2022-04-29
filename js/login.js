@@ -23,11 +23,11 @@ function mpl_run() {
     mpl_canvas.addEventListener("mouseleave", mpl_stopPainting);
   }
   mpl_ctx.strokeStyle = "white";
-  mpl_ctx.lineWidth = 10;
+  mpl_ctx.lineWidth = 3;
   mpl_ctx.lineCap = "round";
 }
 
 
-mpl_init(4, 5, 60, 50, 100);
+mpl_init(4, 5, 30, 25, 50);
 mpl_run();
 
