@@ -31,3 +31,12 @@ function mpl_run() {
 mpl_init(3, 3, 30, 25, 50);
 mpl_run();
 
+
+function newSessionID() {
+  var str = "";
+  for (var i=0; i<10; i++) {
+    str += Math.floor(Math.random()*36).toString(36);
+  }
+  console.log(str);
+}
+newSessionID();
