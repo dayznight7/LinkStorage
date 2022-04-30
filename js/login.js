@@ -8,7 +8,7 @@ function pathToStr() {
 
 function mpl_mouseup(event) {
   if (mpl_dragging) {
-    console.log(pathToStr());
+    console.log(SHA256(pathToStr()));
   }
   mpl_stopPainting();
 }
@@ -28,6 +28,6 @@ function mpl_run() {
 }
 
 
-mpl_init(4, 5, 30, 25, 50);
+mpl_init(3, 3, 30, 25, 50);
 mpl_run();
 
