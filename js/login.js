@@ -22,8 +22,8 @@ function mpl_run() {
     mpl_canvas.addEventListener("mouseup", mpl_mouseup);
     mpl_canvas.addEventListener("mouseleave", mpl_stopPainting);
   }
-  mpl_ctx.strokeStyle = "white";
-  mpl_ctx.lineWidth = 3;
+  mpl_ctx.strokeStyle = "black";
+  mpl_ctx.lineWidth = 5;
   mpl_ctx.lineCap = "round";
 }
 
