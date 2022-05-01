@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkStorage</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Secular+One&display=swap');
+#background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, lightCyan, skyBlue, deepSkyBlue);
+  z-index: -999;
+}
+.flexbox {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+.dashbox {
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  border-radius: 10px;
+  margin: 20px;
+}
+.dashboxtext {
+  text-align: center;
+  font-size: 24px;
+  font-family: 'Do Hyeon', sans-serif;
+  margin-top: 27px;
+}
+.dashboxlist {
+  width: 80%;
+  height: 50%;
+  background-color: rgb(230,230,230);
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-top: -60%;
+  margin-left: -45%;
+  border-radius: 10px;
+  font-family: 'Do Hyeon', sans-serif;
+  padding: 5%;
+  overflow: auto;
+}
+.dashbox i {
+  position: relative;
+  top: 55%;
+  left: 50%;
+  margin-left: -20px;
+  font-size: 40px;
+  color: rgb(100,100,100);
+}
+#addbox i {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  font-size: 100px;
+  color: rgb(130,130,130);
+}
+  </style>
+</head>
+<body>
+
+  <div id="background"></div>
+
+  <div class="flexbox">
+    <div class="dashbox">
+      <div class="dashboxtext">TEXT</div>
+      <div class="dashboxlist">
+        <div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div><div>html</div>
+      </div>
+      <i class="fa-solid fa-circle-chevron-down"></i>
+    </div>
+    <div class="dashbox">
+      <div class="dashboxtext">IMAGE</div>
+      <div class="dashboxlist"></div>
+      <i class="fa-solid fa-circle-chevron-down"></i>
+    </div>
+    <div class="dashbox">
+      <div class="dashboxtext">YOUTUBE</div>
+      <div class="dashboxlist"></div>
+      <i class="fa-solid fa-circle-chevron-down"></i>
+    </div>
+    <div class="dashbox">
+      <div class="dashboxtext">FILE</div>
+      <div class="dashboxlist"></div>
+      <i class="fa-solid fa-circle-chevron-down"></i>
+    </div>
+    <div id="addbox" class="dashbox">
+      <i class="fa-solid fa-circle-plus"></i>
+    </div>
+  </div>
+
+  
+  
+  
+
+  <!--firebase7/8/9 CDN (now 8)-->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="js/firebase_config.js"></script>
+  <!--icon-->
+  <script src="https://kit.fontawesome.com/490800a206.js" crossorigin="anonymous"></script>
+  <!--jQuery cdn https://releases.jquery.com/ --> 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!--sweetalert cdn https://sweetalert.js.org/guides/-->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <script></script>
+
+
+</body>
+</html>
