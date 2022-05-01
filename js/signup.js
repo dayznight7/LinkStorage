@@ -1,3 +1,67 @@
+
+const db = firebase.firestore();
+
+$("#signupid").blur(function() {
+  db.collection("login").where("id", "==", $("#signupid").val()).get().then((qs)=>{
+    if (qs.docs.length == 0) {
+      $("#signupid").css({
+        "color": "green"
+      });
+    }
+    else {
+      $("#signupid").css({
+        "color": "tomato"
+      });
+      swal({
+        title: "Duplicate",
+        text: "Already exists",
+        icon: "error"
+      });
+    }
+  });
+});
+$("#signupid").focus(function() {
+  $("#signupid").css({
+    "color": "black"
+  });
+});
+
+
+function trySignup() {
+  if ($("#signupid").val().length == 0 || $("#signupnn").val().length == 0) {
+    swal({
+      title: "Failed",
+      text: "Please enter more than one letter",
+      icon: "error"
+    });
+    return;
+  }
+  else {
+    db.collection("login").where("id", "==", $("#signupid").val()).get().then((qs)=>{
+      if (qs.docs.length != 0) {
+        swal({
+          title: "Failed",
+          text: "Already exists",
+          icon: "error"
+        });
+      }
+      else {
+        firebase.auth().createUserWithEmailAndPassword($("#signupid").val(), SHA256(pathToStr())).then((uc)=>{
+          console.log(uc);
+          console.log(uc.user);
+          swal({
+            title: "Success!",
+            text: "",
+            icon: "success"
+          });
+        });
+      }
+    });
+
+  }
+}
+
+
 function pathToStr() {
   var tmp_str = "";
   for (var i=0; i < mpl_path.length; i++) {
@@ -37,6 +101,5 @@ function newSessionID() {
   for (var i=0; i<10; i++) {
     str += Math.floor(Math.random()*36).toString(36);
   }
-  console.log(str);
+  return str;
 }
-newSessionID();
