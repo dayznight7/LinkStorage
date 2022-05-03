@@ -40,3 +40,18 @@ function newSessionID() {
   console.log(str);
 }
 newSessionID();
+
+
+function tryLogin() {
+  if ($("#signupid").val().length == 0) {
+    swal({
+      title: "Failed",
+      text: "Please enter more than one letter",
+      icon: "error"
+    });
+    return;
+  }
+  else {
+    
+  }
+}
