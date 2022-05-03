@@ -12,11 +12,6 @@ $("#signupid").blur(function() {
       $("#signupid").css({
         "color": "tomato"
       });
-      swal({
-        title: "Duplicate",
-        text: "Already exists",
-        icon: "error"
-      });
     }
   });
 });
@@ -27,8 +22,29 @@ $("#signupid").focus(function() {
 });
 
 
+$("#signupemail").blur(function() {
+  db.collection("login").where("email", "==", $("#signupemail").val()).get().then((qs)=>{
+    if (qs.docs.length == 0) {
+      $("#signupemail").css({
+        "color": "green"
+      });
+    }
+    else {
+      $("#signupemail").css({
+        "color": "tomato"
+      });
+    }
+  });
+});
+$("#signupemail").focus(function() {
+  $("#signupemail").css({
+    "color": "black"
+  });
+});
+
+
 function trySignup() {
-  if ($("#signupid").val().length == 0 || $("#signupnn").val().length == 0) {
+  if ($("#signupid").val().length == 0 || $("#signupemail").val().length == 0) {
     swal({
       title: "Failed",
       text: "Please enter more than one letter",
@@ -36,9 +52,20 @@ function trySignup() {
     });
     return;
   }
+
+  else if (mpl_path.length < 3) {
+    swal({
+      title: "Failed",
+      text: "Please drag more than three nodes",
+      icon: "error"
+    });
+    return;
+  }
+
   else {
-    db.collection("login").where("id", "==", $("#signupid").val()).get().then((qs)=>{
-      if (qs.docs.length != 0) {
+
+    db.collection("login").where("id", "==", $("#signupid").val()).get().then((qs1)=>{
+      if (qs1.docs.length != 0) {
         swal({
           title: "Failed",
           text: "Already exists",
@@ -46,15 +73,28 @@ function trySignup() {
         });
       }
       else {
-        firebase.auth().createUserWithEmailAndPassword($("#signupid").val(), SHA256(pathToStr())).then((uc)=>{
-          console.log(uc);
-          console.log(uc.user);
-          swal({
-            title: "Success!",
-            text: "",
-            icon: "success"
-          });
+
+        db.collection("login").where("id", "==", $("#signupemail").val()).get().then((qs2)=>{
+          if (qs2.docs.length != 0) {
+            swal({
+              title: "Failed",
+              text: "Already exists",
+              icon: "error"
+            });
+          }
+          else {
+            firebase.auth().createUserWithEmailAndPassword($("#signupemail").val(), SHA256(pathToStr())).then((uc)=>{
+              console.log(uc);
+              console.log(uc.user);
+              swal({
+                title: "Success!",
+                text: "",
+                icon: "success"
+              }).then(function(){ location.replace("index.html"); });
+            });
+          }
         });
+
       }
     });
 
@@ -72,7 +112,7 @@ function pathToStr() {
 
 function mpl_mouseup(event) {
   if (mpl_dragging) {
-    console.log(SHA256(pathToStr()));
+    trySignup();
   }
   mpl_stopPainting();
 }
