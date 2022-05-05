@@ -8,7 +8,7 @@ function pathToStr() {
 
 function mpl_mouseup(event) {
   if (mpl_dragging) {
-    console.log(SHA256(pathToStr()));
+    tryLogin($("#loginid").val(), SHA256(pathToStr()));
   }
   mpl_stopPainting();
 }
@@ -32,18 +32,20 @@ mpl_init(3, 3, 30, 25, 50);
 mpl_run();
 
 
+const db = firebase.firestore();
+
+
 function newSessionID() {
   var str = "";
   for (var i=0; i<10; i++) {
     str += Math.floor(Math.random()*36).toString(36);
   }
-  console.log(str);
+  return str;
 }
-newSessionID();
 
 
-function tryLogin() {
-  if ($("#signupid").val().length == 0) {
+function tryLogin(str1, str2) {
+  if (str1.length == 0) {
     swal({
       title: "Failed",
       text: "Please enter more than one letter",
@@ -52,6 +54,27 @@ function tryLogin() {
     return;
   }
   else {
-    
+    db.collection("login").doc(str1).get().then((doc)=>{
+      firebase.auth().signInWithEmailAndPassword(doc.data().email, str2).then((userCredential)=>{
+        var user = userCredential.user;
+        swal({
+          title: "Success!",
+          text: "",
+          icon: "success"
+        }).then(function() { location.replace("dashboard.html"); });
+      }).catch((error)=>{
+        swal({
+          title: "Failed",
+          text: "Account info does not match",
+          icon: "error"
+        });
+      });
+    }).catch((error)=>{
+      swal({
+        title: "Failed",
+        text: "Account info does not match",
+        icon: "error"
+      });
+    });
   }
 }
