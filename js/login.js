@@ -33,7 +33,7 @@ mpl_run();
 
 
 const db = firebase.firestore();
-
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 function newSessionID() {
   var str = "";
