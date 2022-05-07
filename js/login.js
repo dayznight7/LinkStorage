@@ -8,6 +8,13 @@ function pathToStr() {
 
 function mpl_mouseup(event) {
   if (mpl_dragging) {
+    swal({
+      title: "Loading",
+      text: "please wait for a second",
+      icon: "img/purpleloading.gif",
+      buttons: {},
+      closeOnClickOutside: false,
+    });
     tryLogin($("#loginid").val(), SHA256(pathToStr()));
   }
   mpl_stopPainting();
@@ -54,27 +61,34 @@ function tryLogin(str1, str2) {
     return;
   }
   else {
-    db.collection("login").doc(str1).get().then((doc)=>{
-      firebase.auth().signInWithEmailAndPassword(doc.data().email, str2).then((userCredential)=>{
-        var user = userCredential.user;
-        swal({
-          title: "Success!",
-          text: "",
-          icon: "success"
-        }).then(function() { location.replace("dashboard.html"); });
-      }).catch((error)=>{
+
+    db.collection("login").where("id", "==", str1).get().then((qs)=>{
+      if (qs.docs.length == 0) {
         swal({
           title: "Failed",
           text: "Account info does not match",
           icon: "error"
         });
-      });
-    }).catch((error)=>{
-      swal({
-        title: "Failed",
-        text: "Account info does not match",
-        icon: "error"
-      });
+      }
+      else {
+
+        firebase.auth().signInWithEmailAndPassword(qs.docs[0].data().email, str2).then((uc)=>{
+          swal({
+            title: "Success!",
+            text: "",
+            icon: "success"
+          }).then(function() { location.replace("dashboard.html"); });
+        }).catch((error)=>{
+          swal({
+            title: "Failed",
+            text: "Account info does not match",
+            icon: "error"
+          });
+        });
+      }
     });
+
+    
   }
 }
+

@@ -83,9 +83,18 @@ function trySignup() {
             });
           }
           else {
-            firebase.auth().createUserWithEmailAndPassword($("#signupemail").val(), SHA256(pathToStr())).then((uc)=>{
-              console.log(uc);
-              console.log(uc.user);
+            firebase.auth().createUserWithEmailAndPassword($("#signupemail").val(), SHA256(pathToStr())).then(()=>{
+              firebase.auth().signInWithEmailAndPassword($("#signupemail").val(), SHA256(pathToStr())).then((uc)=>{
+                db.collection("login").doc(uc.user.uid).set({
+                  id: $("#signupid").val(),
+                  email: $("#signupemail").val(),
+                });
+                db.collection("data").doc(uc.user.uid).set({
+                  text: [],
+                  youtube: [],
+                });
+              });
+              firebase.auth().signOut();
               swal({
                 title: "Success!",
                 text: "",
@@ -112,6 +121,13 @@ function pathToStr() {
 
 function mpl_mouseup(event) {
   if (mpl_dragging) {
+    swal({
+      title: "Loading",
+      text: "please wait for a second",
+      icon: "img/purpleloading.gif",
+      buttons: {},
+      closeOnClickOutside: false,
+    });
     trySignup();
   }
   mpl_stopPainting();
