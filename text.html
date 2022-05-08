@@ -26,44 +26,19 @@
   justify-content: center;
   align-content: center;
 }
-#loginbox {
+#textbox {
   background-color: white;
-  width: 450px;
-  height: 750px;
+  width: 600px;
+  height: 900px;
   border-radius: 5px;
   text-align: center;
   margin: 20px;
 }
-#logintext {
+#textboxtext {
   font-family: 'Secular One', sans-serif;
   font-size: 36px;
   font-weight: 600;
   margin-top: 60px;
-  margin-bottom: 0px;
-}
-input {
-  margin-top: 30px;
-  box-sizing: border-box;
-  width: 310px;
-  background-color: rgb(230,230,230);
-  border: none;
-  padding: 20px 40px;
-  font-family: 'Do Hyeon', sans-serif;
-  font-size: 20px;
-  text-align: center;
-  border-radius: 3px;
-}
-input:focus {
-  outline: none;
-}
-#cantlogin {
-  margin-top: 30px;
-  font-family: 'Secular One', sans-serif;
-  font-size: 16px;
-}
-#cantlogin a {
-  color: rgb(170,170,170);
-  text-decoration: none;
 }
 .swal-icon img[src="img/purpleloading.gif"] {
   width: 88px;
@@ -77,23 +52,14 @@ input:focus {
 
     <div class="flexbox">
 
-      <div id="loginbox">
-        <div id="logintext">SIGN UP</div>
-        <input id="signupid" type="text" placeholder="ID" onfocus="this.placeholder=''" onblur="this.placeholder='ID'" spellcheck="false">
-        <input id="signupemail" type="text" placeholder="EMAIL" onfocus="this.placeholder=''" onblur="this.placeholder='EMAIL'" spellcheck="false">
-    
-        <div class="mplContainer">
-          <div id="mpl"></div>
-          <canvas id="mplCanvas" class="canvas"></canvas>  
-        </div>
-    
-        <div id="cantlogin">
-          <a href="index.html">Go back to LOGIN Page</a>
-        </div>
+      <div id="textbox">
+        <div id="textboxtext">TEXT</div>
+        <div id="addtext"></div>
+        <div id="textboxcontents"></div>
       </div>
 
     </div>
-
+    
   </div>
   
 
@@ -109,9 +75,7 @@ input:focus {
   <!--sweetalert cdn https://sweetalert.js.org/guides/-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-  <script src="js/myPatternLock.js"></script>
-  <script src="js/webtoolkit.sha256.js"></script>
-  <script src="js/signup.js"></script>
+  <script src="js/text.js"></script>
 
 
 </body>

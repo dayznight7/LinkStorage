@@ -1,6 +1,3 @@
-const db = firebase.firestore();
-const storage = firebase.storage();
-//https://gist.github.com/Dohyunwoo/b8370f208619c7f44a2a13fb390e1514
 
 
 db.collection("data").doc()
@@ -13,12 +10,14 @@ firebase.auth().onAuthStateChanged((user)=>{
       console.log(doc.data());
       console.log(Object.keys(doc.data()));
       console.log(Object.values(doc.data()));
-
+      /*
+      var storageRef = storage.ref();
+      var storagePath = storageRef.child(`${uid}/image/`+``);
+      var storageUpload = storagePath.put(file);
+      */
     });
   }
   else {
     location.replace("index.html");
   }
 });
-
-

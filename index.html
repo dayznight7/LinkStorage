@@ -16,18 +16,23 @@
   right: 0;
   background: linear-gradient(135deg, lightCyan, skyBlue, deepSkyBlue);
   z-index: -999;
+  overflow: auto;
+}
+.flexbox {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
 }
 #loginbox {
-  position: absolute;
-  top: 50%;
-  left: 50%;
   background-color: white;
   width: 450px;
-  margin-left: -225px;
   height: 750px;
-  margin-top: -375px;
   border-radius: 5px;
   text-align: center;
+  margin: 20px;
 }
 #logintext {
   font-family: 'Secular One', sans-serif;
@@ -67,25 +72,29 @@ input:focus {
 </head>
 <body>
 
-  <div id="background"></div>
+  <div id="background">
 
-  <div id="loginbox">
-    <div id="logintext">LOGIN</div>
-    <input id="loginid" type="text" placeholder="ID" onfocus="this.placeholder=''" onblur="this.placeholder='ID'" spellcheck="false">
+    <div class="flexbox">
 
-    <div class="mplContainer">
-      <div id="mpl"></div>
-      <canvas id="mplCanvas" class="canvas"></canvas>  
+      <div id="loginbox">
+        <div id="logintext">LOGIN</div>
+        <input id="loginid" type="text" placeholder="ID" onfocus="this.placeholder=''" onblur="this.placeholder='ID'" spellcheck="false">
+    
+        <div class="mplContainer">
+          <div id="mpl"></div>
+          <canvas id="mplCanvas" class="canvas"></canvas>  
+        </div>
+    
+        <div id="cantlogin">
+          <a href="signup.html">Sign Up</a>
+          <a>&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+          <a href="#.html">Forgot your password?</a> 
+        </div>
+      </div>
+
     </div>
 
-    <div id="cantlogin">
-      <a href="signup.html">Sign Up</a>
-      <a>&nbsp;&nbsp;/&nbsp;&nbsp;</span>
-      <a href="#.html">Forgot your password?</a> 
-    </div>
   </div>
-
-  
   
 
   <!--firebase7/8/9 CDN (now 8)-->
