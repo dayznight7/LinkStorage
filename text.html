@@ -44,6 +44,23 @@
   width: 88px;
   height: 88px;
 }
+#addtextarea {
+  width: 400px;
+  height: 100px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 16px;
+}
+#textitem {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 16px;
+}
+#textitem div {
+  width: 400px;
+  height: auto;
+  margin: 0 auto;
+  word-wrap: break-word;
+  word-break: break-all;
+}
   </style>
 </head>
 <body>
@@ -54,8 +71,26 @@
 
       <div id="textbox">
         <div id="textboxtext">TEXT</div>
-        <div id="addtext"></div>
-        <div id="textboxcontents"></div>
+
+        <div id="addtext">
+          <textarea id="addtextarea" spellcheck="false"></textarea>
+          <i class="fa-solid fa-floppy-disk"></i>
+        </div>
+
+        <div id="textboxcontents">
+
+          <div id="textlist">
+
+            <div id="textitem">
+              <div>가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz가나다라마바사아자차카타파하abcdefghijklmnopqrstuvwxyz</div>
+              
+              <i class="fa-solid fa-copy"></i>
+              <i class="fa-solid fa-trash"></i>
+            </div>
+
+          </div>
+
+        </div>
       </div>
 
     </div>
