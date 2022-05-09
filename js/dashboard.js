@@ -13,12 +13,11 @@ firebase.auth().onAuthStateChanged((user)=>{
       console.log(doc.data());
       console.log(Object.keys(doc.data()));
       console.log(Object.values(doc.data()));
-
+      location.replace("text.html");
     });
   }
   else {
     location.replace("index.html");
   }
 });
-
 
