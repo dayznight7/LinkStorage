@@ -29,9 +29,42 @@ function deleteitem(idx) {
         arr_text.splice(idx,1);
         db.collection("data").doc(uid).update({ text: arr_text });
       });
+
+      swal({
+        title: "Success!",
+        text: "",
+        icon: "success"
+      }).then(function() { location.reload(); });
+
     }
   });
 }
+
+function additem() {
+  firebase.auth().onAuthStateChanged((user)=>{
+    if (user) {
+      var uid = user.uid;
+      db.collection("data").doc(uid).get().then((doc)=>{
+        var arr_text = doc.data().text;
+        arr_text[arr_text.length] = $("textarea#addtextarea").val();
+        db.collection("data").doc(uid).update({ text: arr_text });
+      });
+
+      swal({
+        title: "Success!",
+        text: "",
+        icon: "success"
+      }).then(function() { location.reload(); });
+
+    }
+  });
+}
+
+var tmp = `
+<textarea id="addtextarea" spellcheck="false"></textarea>
+<i onclick="additem()" class="fa-solid fa-floppy-disk"></i>
+`
+$("#addtext").append(tmp);
 
 
 firebase.auth().onAuthStateChanged((user)=>{

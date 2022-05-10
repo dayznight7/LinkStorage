@@ -3,7 +3,6 @@ const storage = firebase.storage();
 //https://gist.github.com/Dohyunwoo/b8370f208619c7f44a2a13fb390e1514
 
 
-db.collection("data").doc()
 firebase.auth().onAuthStateChanged((user)=>{
   if (user) {
     var uid = user.uid;
