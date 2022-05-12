@@ -46,7 +46,7 @@ function additem() {
       var uid = user.uid;
       db.collection("data").doc(uid).get().then((doc)=>{
         var arr_text = doc.data().text;
-        arr_text[arr_text.length] = $("textarea#addtextarea").val();
+        arr_text[arr_text.length] = $("textarea#addtextarea").val().replace(/(\n|\r\n)/g, "<br>");
         db.collection("data").doc(uid).update({ text: arr_text });
       });
 
