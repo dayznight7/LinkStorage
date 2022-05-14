@@ -92,6 +92,7 @@ function trySignup() {
                 db.collection("data").doc(uc.user.uid).set({
                   text: [],
                   youtube: [],
+                  link: ["text","youtube"]
                 });
               });
               firebase.auth().signOut();
